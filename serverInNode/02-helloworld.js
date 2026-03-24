@@ -19,13 +19,23 @@ const server = http.createServer((req, res) => {
 
   switch (path) {
     case "":
-      res.writeHead(200, { "content-type": "text/plain" });
-      res.end("Home page");
+      serveStaticFile(res, "/public/home.html", "text/html");
+      /*  res.writeHead(200, { "content-type": "text/plain" });
+      res.end("Home page"); */
       break;
 
     case "/about":
-      res.writeHead(200, { "content-type": "text/plain" });
-      res.end("About");
+      serveStaticFile(res, "/public/about.html", "text/html");
+
+      /* res.writeHead(200, { "content-type": "text/plain" });
+      res.end("About"); */
+      break;
+
+    case "/img/logo.png":
+      serveStaticFile(res, "/public/img/logo.png", "image/png");
+
+      /* res.writeHead(200, { "content-type": "text/plain" });
+      res.end("About"); */
       break;
 
     default:
