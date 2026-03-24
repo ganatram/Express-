@@ -1,34 +1,47 @@
 const express = require("express");
+
 const app = express();
+
 const port = process.env.PORT || 3000;
 
-//Route - home page
 app.get("/", (req, res) => {
   res.type("text/plain");
-  res.send("Welcome to ML Travels");
+  res.send("ML Travel");
 });
 
-//Route - about page
 app.get("/about", (req, res) => {
   res.type("text/plain");
-  res.send("About - ML Travels");
+  res.send("About ML Travel");
+});
+
+app.get("/about/contact", (req, res) => {
+  res.type("text/plain");
+  res.send("About ML Travel - Contact us");
+});
+
+app.get("/about/directions", (req, res) => {
+  res.type("text/plain");
+  res.send("About ML Travel - Directions");
 });
 
 // custom 404 page
 app.use((req, res) => {
-  // middleware - fallback
   res.type("text/plain");
   res.status(404);
-  res.send("404 not found");
+  res.send("404 - Not Found");
 });
 
 // custom 500 page
 app.use((err, req, res, next) => {
-  // middleware - fallback
-  console.log(err.message);
+  console.error(err.message);
   res.type("text/plain");
   res.status(500);
   res.send("500 - Server Error");
 });
 
-app.listen(port, () => console.log(`express started on ${port} `));
+app.listen(port, () =>
+  console.log(
+    `Express started on http://localhost:${port}; ` +
+      `press Ctrl-C to terminate.`,
+  ),
+);
