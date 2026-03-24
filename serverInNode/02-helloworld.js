@@ -39,8 +39,9 @@ const server = http.createServer((req, res) => {
       break;
 
     default:
-      res.writeHead(404, { "content-type": "text/plain" });
-      res.end("Not Found");
+      serveStaticFile(res, "/public/404.html", "text/html");
+      /*    res.writeHead(404, { "content-type": "text/html" });
+      res.end("Not Found"); */
       break;
   }
 
