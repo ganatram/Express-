@@ -1,5 +1,8 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
+// const fortune = require("./lib/fortune");
+
+const handlers = require("./lib/handlers");
 
 const app = express();
 app.engine("hbs", engine({ extname: "hbs" }));
@@ -14,7 +17,8 @@ const port = process.env.PORT || 3000;
   res.send("ML Travel");
 }); */
 
-app.get("/", (req, res) => res.render("home"));
+// app.get("/", (req, res) => res.render("home"));
+app.get("/", handlers.home);
 
 /* app.get("/about/contact", (req, res) => {
   res.type("text/plain");
@@ -31,7 +35,17 @@ app.get("/", (req, res) => res.render("home"));
   res.send("About ML Travel");
 }); */
 
-app.get("/about", (req, res) => res.render("about"));
+// how to pass contextData to partials
+
+// app.get("/about", (req, res) => res.render("about"));
+
+/* app.get("/about", (req, res) => {
+  // const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+  res.render("about", { fortune: f1.getFortune() });
+});
+ */
+
+app.get("/about", handlers.about);
 
 // custom 404 page
 /* app.use((req, res) => {
@@ -40,10 +54,12 @@ app.get("/about", (req, res) => res.render("about"));
   res.send("404 - Not Found");
 }); */
 
-app.use((req, res) => {
+/* app.use((req, res) => {
   res.status(404);
   res.render("404");
-});
+}); */
+
+app.use("/", handlers.notFound);
 
 // custom 500 page
 /* app.use((err, req, res, next) => {
@@ -52,11 +68,13 @@ app.use((req, res) => {
   res.status(500);
   res.send("500 - Server Error");
 }); */
-app.use((err, req, res, next) => {
+
+/* app.use((err, req, res, next) => {
   console.error(err.message);
   res.status(500);
   res.render("500");
-});
+}); */
+app.use("/", handlers.serverError);
 
 app.listen(port, () =>
   console.log(
